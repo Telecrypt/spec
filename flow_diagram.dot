@@ -5,7 +5,7 @@ digraph ladder {
   edge [dir=none fontsize=10 fontname="Helvetica"];
 
   // Column labels
-  as [shape=Square label="Acme Server" style=filled color=lightblue];
+  as [shape=Square label="Acme Server (3)" style=filled color=lightblue];
   pp [shape=Square label="Telecrypt\nServer" style=filled color=coral];
 
   u [shape=Square label="Alice's phone\nrunning AcmeMobileApp" style=filled color=deepskyblue];
@@ -68,5 +68,5 @@ digraph ladder {
   u17 -> legend [style=invis weight=10];
 
   // Legend
-  { legend [shape=plaintext label="(1) Telecrypt provides a SDK for all lines in orange.\l(2) PN stands for push notification. \l"] }
+  { legend [shape=plaintext label="(1) Telecrypt provides a SDK for all lines in orange.\l(2) PN stands for push notification. \l(3) ACME represents a fictive company."] }
 }
