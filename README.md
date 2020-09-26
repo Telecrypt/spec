@@ -11,4 +11,6 @@ This repository contains specifications for Telecrypt's end-to-end-encrypted pus
 
 ## Flow Diagram
 
-![Flow Diagram](https://g.gravizo.com/source/svg?https%3A%2F%2Fraw.githubusercontent.com%2FTelecrypt%2Fspec%2Fam-spec%2Fflow_diagram.dot)
+Below is a flow diagram of Telecrypt's solution.
+
+![Flow Diagram](https://g.gravizo.com/source/svg?https%3A%2F%2Fraw.githubusercontent.com%2FTelecrypt%2Fspec%2Fmaster%2Fflow_diagram.dot)
