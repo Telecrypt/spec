@@ -1,0 +1,72 @@
+digraph ladder {
+  ranksep="0.5"; nodesep="0.5"; splines="line"; ratio="1";
+
+  node [shape=point fontsize=10 fontname="Helvetica"];
+  edge [dir=none fontsize=10 fontname="Helvetica"];
+
+  // Column labels
+  as [shape=Square label="Acme Server (3)" style=filled color=lightblue];
+  pp [shape=Square label="Telecrypt\nServer" style=filled color=coral];
+
+  u [shape=Square label="Alice's phone\nrunning AcmeMobileApp" style=filled color=deepskyblue];
+  fa [shape=Square label="Notification platform\n(FCM/APNs/WNS)" style=filled color=lightgray];
+  
+  // Draw the  column headings, no line
+  { rank=same; edge[style=invis] u -> pp -> as -> fa }
+
+  // Draw the columns
+  u -> u1 [style=dotted weight=10];
+  u2 -> u3  [style=dotted minlen=2 weight=10];
+  u3 -> u4 -> u5 -> u6 -> u7 -> u8 -> u9 -> u10 -> u11 -> u12 -> u13 [style=dotted weight=10];
+  u14 -> u15 -> u16 [style=dotted weight=10];
+  pp -> pp1 -> pp2 [style=dotted weight=10];
+  pp2 -> pp3 [style=dotted minlen=2 weight=10];
+  pp4 -> pp5 -> pp6 -> pp7 -> pp8 -> pp9 -> pp10 [style=dotted weight=10];
+  pp11 -> pp12 -> pp13 -> pp14 -> pp15 [style=dotted weight=10];
+  as -> as1 -> as2[style=dotted weight=10];
+  as2 -> as3 [style=dotted minlen=2 weight=10];
+  as4 -> as5 [style=dotted weight=10];
+  as6 -> as7 -> as8 [style=dotted weight=10];
+  fa -> fa1 -> fa2 [style=dotted weight=10];
+  fa2 -> fa3 [style=dotted minlen=2 weight=10];
+  fa3 -> fa4 -> fa5 -> fa6 -> fa7 -> fa8 -> fa9 -> fa10 -> fa11 -> fa12 [style=dotted weight=10];
+
+  // Hide unused points
+  u3, u4, u5, u6, u7, u8, u9, u10, u11, u12, u15 [style=invis height=0];
+  pp1, pp2, pp5, pp6, pp8, pp9, pp12, pp13, pp14 [style=invis height=0];
+  as1, as2, as7 [style=invis height=0];
+  fa1, fa2, fa3, fa4, fa5, fa6, fa7, fa8, fa9, fa10, fa11 [style=invis height=0];
+
+  // Now each step in the ladder
+  // 1st block
+  u1 [shape=Square label="On first launch of mobile app"];
+  u1 -> u2 [label="Generate asymmetric keypair\n (ALICE_PUB,ALICE_PRIV),\nand get unique device registration\ntoken ALICE_DEVICE_TOKEN" weight=10];
+  u2 -> pp3 [dir=forward label="Send ALICE_PUB and\nALICE_DEVICE_TOKEN (1)" color=coral];
+  u2 -> as3 [dir=forward xlabel="Register user Alice with\nALICE_DEVICE_TOKEN"];
+  pp3 -> pp4 [label="Store ALICE_PUB and\nALICE_DEVICE_TOKEN" weight=10];
+  as3 -> as4 [label="Store ALICE_DEVICE_TOKEN" weight=10];
+  
+  // 2nd block
+  as5 [shape=Square label="Now, Acme Server wants\nto send a PN to Alice (2)"];
+  as5 -> as6 [label="Craft content for PN" weight=10];
+  as6 -> pp7 [dir=forward label="Send ALICE_DEVICE_TOKEN" color=coral];
+  pp7 -> as8 [dir=forward label="Send ALICE_PUB" color=coral];
+  as8 -> as9 [label="Encrypt PN with ALICE_PUB" weight=10 color=coral];
+  as9 -> pp10 [dir=forward label="Send encrypted PN" color=coral];
+  pp10 -> pp11 [label="Store encrypted PN" weight=10];
+  pp11 -> fa12 [dir=forward label="Send empty PN to\nwake Alice's up"];
+  
+  // 3rd block
+  u13 [shape=Square label="Alice receives an empty PN"];
+  u13 -> u14 [weight=10];
+  u14 -> pp15 [dir=forward label="Check for Alice's PN" color=coral];
+  pp15 -> u16 [dir=forward label="Send back stored\nencrypted PN" color=coral];
+  u16 -> u17 [label="Decrypt PN with ALICE_PRIV" weight=10];
+  u17 [shape=Square label="Show local notification\non Alice's phone\nwith PN's content"];
+
+  // Add empty space at the bottom before legend
+  u17 -> legend [style=invis weight=10];
+
+  // Legend
+  { legend [shape=plaintext label="(1) Telecrypt provides a SDK for all lines in orange.\l(2) PN stands for push notification. \l(3) ACME represents a fictive company.\l"] }
+}
